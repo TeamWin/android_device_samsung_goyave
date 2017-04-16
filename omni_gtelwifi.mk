@@ -30,7 +30,7 @@ PRODUCT_PACKAGES += \
     charger
 
 PRODUCT_COPY_FILES += \
-    device/samsung/gtelwifiue/kernel:kernel
+    device/samsung/gtelwifi/kernel:kernel
 
 PRODUCT_NAME := omni_gtelwifi
 PRODUCT_DEVICE := gtelwifi
