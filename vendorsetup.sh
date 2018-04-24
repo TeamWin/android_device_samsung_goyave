@@ -1,1 +1,1 @@
-add_lunch_combo omni_gtelwifi-userdebug
+add_lunch_combo omni_gtel3g-userdebug

@@ -11,8 +11,8 @@ TARGET_CPU_SMP := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
 TARGET_BOOTLOADER_BOARD_NAME := sc8830
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/gtelwifi/mkbootimg.mk
-TARGET_PREBUILT_KERNEL := device/samsung/gtelwifi/kernel
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/gtel3g/mkbootimg.mk
+TARGET_PREBUILT_KERNEL := device/samsung/gtel3g/kernel
 BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048

@@ -30,10 +30,10 @@ PRODUCT_PACKAGES += \
     charger
 
 PRODUCT_COPY_FILES += \
-    device/samsung/gtelwifi/kernel:kernel
+    device/samsung/gtel3g/kernel:kernel
 
-PRODUCT_NAME := omni_gtelwifi
-PRODUCT_DEVICE := gtelwifi
+PRODUCT_NAME := omni_gtel3g
+PRODUCT_DEVICE := gtel3g
 PRODUCT_BRAND := samsung
-PRODUCT_MODEL := SM-T560
+PRODUCT_MODEL := SM-T561
 PRODUCT_MANUFACTURER := SAMSUNG

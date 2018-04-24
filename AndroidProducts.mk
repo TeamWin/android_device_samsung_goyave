@@ -1,2 +1,2 @@
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_gtelwifi.mk
+    $(LOCAL_DIR)/omni_gtel3g.mk

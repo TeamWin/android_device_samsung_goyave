@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-ifneq ($(filter gtelwifi,$(TARGET_DEVICE)),)
+ifneq ($(filter gtel3g,$(TARGET_DEVICE)),)
 
 LOCAL_PATH := $(call my-dir)
 
