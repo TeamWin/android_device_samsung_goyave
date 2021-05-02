@@ -49,6 +49,7 @@ SP1_NAME := "internal_sd"
 SP1_BACKUP_METHOD := files
 SP1_MOUNTABLE := 1
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun%d/file
+TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone1/temp
 TW_THEME := portrait_hdpi
 TW_INTERNAL_STORAGE_PATH := "/data/media/0"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
