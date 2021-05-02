@@ -30,7 +30,7 @@ PRODUCT_PACKAGES += \
     charger
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/kernel:kernel
+    $(LOCAL_PATH)/prebuilt/kernel:kernel
 
 PRODUCT_NAME := omni_gtel3g
 PRODUCT_DEVICE := gtel3g
