@@ -30,7 +30,7 @@ PRODUCT_PACKAGES += \
     charger
 
 PRODUCT_COPY_FILES += \
-    device/samsung/gtel3g/kernel:kernel
+    $(LOCAL_PATH)/kernel:kernel
 
 PRODUCT_NAME := omni_gtel3g
 PRODUCT_DEVICE := gtel3g

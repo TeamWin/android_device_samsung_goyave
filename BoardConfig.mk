@@ -1,3 +1,5 @@
+DEVICE_PATH := device/samsung/gtel3g
+
 # Architecture
 TARGET_ARCH := arm
 TARGET_CPU_ABI := armeabi-v7a
@@ -15,8 +17,8 @@ TARGET_NO_BOOTLOADER := true
 TARGET_BOARD_PLATFORM := sc8830
 
 # Kernel
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/gtel3g/mkbootimg.mk
-TARGET_PREBUILT_KERNEL := device/samsung/gtel3g/kernel
+BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_PATH)/mkbootimg.mk
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/kernel
 BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
