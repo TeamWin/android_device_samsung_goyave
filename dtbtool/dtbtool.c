@@ -40,12 +40,10 @@
 #include <errno.h>
 #include <unistd.h>
 
-//#define QCDT_MAGIC     "QCDT"  /* Master DTB magic */
-#define QCDT_MAGIC     "SPRD"  /* Master DTB magic */
-#define QCDT_VERSION   1       /* QCDT version */
+#define SPRD_MAGIC     "SPRD"  /* Master DTB magic */
+#define SPRD_VERSION   1       /* SPRD version */
 
-//#define QCDT_DT_TAG    "qcom,msm-id = <"
-#define QCDT_DT_TAG    "sprd,sc-id = <"
+#define SPRD_DT_TAG    "sprd,sc-id = <"
 
 #define PAGE_SIZE_DEF  2048
 #define PAGE_SIZE_MAX  (1024*1024)
@@ -75,9 +73,9 @@ struct chipInfo_t {
 
 struct chipInfo_t *chip_list;
 
-char *input_dir;
+char  input_dir[512] = "";
 char *output_file;
-char *dtc_path;
+char  dtc_path[512] = "";
 int   verbose;
 int   page_size = PAGE_SIZE_DEF;
 
@@ -110,14 +108,15 @@ int parse_commandline(int argc, char *const argv[])
            != -1) {
         switch (c) {
         case 1:
-            if (!input_dir)
-                input_dir = optarg;
+            if (strlen(input_dir) == 0)
+                strncpy(input_dir, optarg, 511);
             break;
         case 'o':
             output_file = optarg;
             break;
         case 'p':
-            dtc_path = optarg;
+            strncpy(dtc_path, optarg, 511);
+            strncat(dtc_path, "/", 511-strlen(dtc_path));
             break;
         case 's':
             page_size = atoi(optarg);
@@ -140,11 +139,8 @@ int parse_commandline(int argc, char *const argv[])
         return RC_ERROR;
     }
 
-    if (!input_dir)
-        input_dir = "./";
-
-    if (!dtc_path)
-        dtc_path = "";
+    if (strlen(input_dir) == 0)
+        strncpy(input_dir, "./", 511);
 
     return RC_SUCCESS;
 }
@@ -210,8 +206,8 @@ void chip_deleteall()
     }
 }
 
-/* Extract 'qcom,msm-id' parameter triplet from DTB
-      qcom,msm-id = <x y z>;
+/* Extract 'sprd,sc-id' parameter triplet from DTB
+      sprd,sc-id = <x y z>;
  */
 struct chipInfo_t *getChipInfo(const char *filename, int *num)
 {
@@ -256,10 +252,10 @@ struct chipInfo_t *getChipInfo(const char *filename, int *num)
     if (pfile == NULL) {
         log_err("... skip, fail to decompile dtb\n");
     } else {
-        /* Find "qcom,msm-id" */
+        /* Find "sprd,sc-id" */
         while ((llen = getline(&line, &line_size, pfile)) != -1) {
-            if ((pos = strstr(line, QCDT_DT_TAG)) != NULL) {
-                pos += strlen(QCDT_DT_TAG);
+            if ((pos = strstr(line, SPRD_DT_TAG)) != NULL) {
+                pos += strlen(SPRD_DT_TAG);
 
                 entryEnded = 0;
                 while (1) {
@@ -312,7 +308,7 @@ struct chipInfo_t *getChipInfo(const char *filename, int *num)
                     }
                 }
 
-                log_err("... skip, incorrect '%s' format\n", QCDT_DT_TAG);
+                log_err("... skip, incorrect '%s' format\n", SPRD_DT_TAG);
                 break;
             }
         }
@@ -341,7 +337,7 @@ int main(int argc, char **argv)
     int dtb_count = 0, dtb_offset = 0;
     size_t wrote = 0, expected = 0;
     struct stat st;
-    uint32_t version = QCDT_VERSION;
+    uint32_t version = SPRD_VERSION;
     int num;
     uint32_t dtb_size;
 
@@ -355,6 +351,8 @@ int main(int argc, char **argv)
     log_info("  Input directory: '%s'\n", input_dir);
     log_info("  Output file: '%s'\n", output_file);
 
+    /* Ensure input_dir ends with / */
+    strncat(input_dir, "/", 511-strlen(input_dir));
     DIR *dir = opendir(input_dir);
     if (!dir) {
         log_err("Failed to open input directory '%s'\n", input_dir);
@@ -370,10 +368,10 @@ int main(int argc, char **argv)
     memset(filler, 0, page_size);
 
     /* Open the .dtb files in the specified path, decompile and
-       extract "qcom,msm-id" parameter
+       extract "sprd,sc-id" parameter
      */
     while ((dp = readdir(dir)) != NULL) {
-        if ((dp->d_type == DT_REG)) {
+        if (dp->d_type == DT_REG) {
             flen = strlen(dp->d_name);
             if ((flen > 4) &&
                 (strncmp(&dp->d_name[flen-4], ".dtb", 4) == 0)) {
@@ -393,7 +391,7 @@ int main(int argc, char **argv)
                 chip = getChipInfo(filename, &num);
                 if (!chip) {
                     log_err("skip, failed to scan for '%s' tag\n",
-                            QCDT_DT_TAG);
+                            SPRD_DT_TAG);
                     free(filename);
                     continue;
                 }
@@ -454,14 +452,14 @@ int main(int argc, char **argv)
     log_info("\nGenerating master DTB... ");
 
     out_fd = open(output_file, O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR);
-    if (!out_fd < 0) {
+    if (out_fd < 0) {
         log_err("Cannot create '%s'\n", output_file);
         rc = RC_ERROR;
         goto cleanup;
     }
 
     /* Write header info */
-    wrote += write(out_fd, QCDT_MAGIC, sizeof(uint8_t) * 4); /* magic */
+    wrote += write(out_fd, SPRD_MAGIC, sizeof(uint8_t) * 4); /* magic */
     wrote += write(out_fd, &version, sizeof(uint32_t));      /* version */
     wrote += write(out_fd, (uint32_t *)&dtb_count, sizeof(uint32_t));
                                                              /* #DTB */
@@ -539,11 +537,11 @@ int main(int argc, char **argv)
     close(out_fd);
 
     if (expected != wrote) {
-        log_err("error writing output file, please rerun: size mismatch %d vs %d\n",
+        log_err("error writing output file, please rerun: size mismatch %ld vs %ld\n",
                 expected, wrote);
         rc = RC_ERROR;
     } else
-        log_dbg("Total wrote %u bytes\n", wrote);
+        log_dbg("Total wrote %lu bytes\n", wrote);
 
     if (rc != RC_SUCCESS)
         unlink(output_file);
@@ -555,4 +553,3 @@ cleanup:
     chip_deleteall();
     return rc;
 }
-
