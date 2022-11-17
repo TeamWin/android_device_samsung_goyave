@@ -30,7 +30,7 @@ COMMON_PATH := device/samsung/sc8830-common
 # Device path for OEM device tree
 DEVICE_PATH := device/samsung/gtel3g
 
-call inherit-product, $(COMMON_PATH)/device-common.mk)
+$(call inherit-product, $(COMMON_PATH)/device-common.mk)
 
 PRODUCT_PACKAGES += \
     charger_res_images \
