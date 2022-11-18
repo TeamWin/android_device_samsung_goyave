@@ -1,0 +1,7 @@
+
+# Fix system partition
+# Why not separated fstab? Just to make some compatibility between devices,
+# for some platform fixes and etc, etc.
+
+on fs
+    symlink /dev/block/platform/sprd-sdhci.3/by-name/system /dev/block/platform/sprd-sdhci.3/by-name/SYSTEM
