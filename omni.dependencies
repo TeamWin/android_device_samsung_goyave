@@ -1,7 +1,7 @@
 [
   {
     "remote": "github",
-    "repository": "samsung-sc8830/android_device_samsung_sc8830-common",
+    "repository": "samsung-sc8830/twrp_device_samsung_sc8830-common",
     "target_path": "device/samsung/sc8830-common",
     "branch": "android-7.1"
   }
