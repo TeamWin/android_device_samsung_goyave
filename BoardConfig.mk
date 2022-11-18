@@ -4,7 +4,7 @@
 # As much as possible, those components should be built unconditionally,
 # with device-specific names to avoid collisions, to avoid device-specific
 # bitrot and build breakages.
-DEVICE_PATH := device/samsung/gtel3g
+DEVICE_PATH := device/samsung/goyave
 
 # Kernel
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
@@ -13,5 +13,8 @@ TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 -include $(COMMON_PATH)/BoardConfigCommon.mk
 
 # Recovery
-TARGET_OTA_ASSERT_DEVICE := SM-T561,SM-T560,gtel3g,gtelwifi,gtel3gxx,gtelwifixx,smt561,smt560
-TW_THEME := portrait_hdpi
+TARGET_OTA_ASSERT_DEVICE := SM-T113,goyave,goyavewifi,smt113
+BOARD_HAS_NO_SELECT_BUTTON := true
+TW_THEME := landscape_hdpi
+RECOVERY_TOUCHSCREEN_FLIP_Y := true
+RECOVERY_TOUCHSCREEN_SWAP_XY := true

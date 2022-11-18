@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-ifneq ($(filter gtel3g,$(TARGET_DEVICE)),)
+ifneq ($(filter goyave,$(TARGET_DEVICE)),)
 
 DEVICE_PATH := $(call my-dir)
 

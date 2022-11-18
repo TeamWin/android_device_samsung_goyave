@@ -29,7 +29,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 COMMON_PATH := device/samsung/sc8830-common
 
 # Device path for OEM device tree
-DEVICE_PATH := device/samsung/gtel3g
+DEVICE_PATH := device/samsung/goyave
 
 PRODUCT_PACKAGES += \
     charger_res_images \
@@ -38,8 +38,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/prebuilt/kernel:kernel
 
-PRODUCT_NAME := omni_gtel3g
-PRODUCT_DEVICE := gtel3g
+PRODUCT_NAME := omni_goyave
+PRODUCT_DEVICE := goyave
 PRODUCT_BRAND := samsung
-PRODUCT_MODEL := SM-T561
+PRODUCT_MODEL := Galaxy Tab 3 Lite
 PRODUCT_MANUFACTURER := SAMSUNG
