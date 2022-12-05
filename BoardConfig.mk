@@ -8,6 +8,7 @@ DEVICE_PATH := device/samsung/goyave
 
 # Kernel
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+TARGET_PREBUILT_DTIMAGE := $(DEVICE_PATH)/prebuilt/dt.img # Used by mkbootimg.mk in common tree.
 
 # Inherit from common
 -include $(COMMON_PATH)/BoardConfigCommon.mk
